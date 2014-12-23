@@ -22,12 +22,8 @@ executable madison-cal
   -- other-extensions:    
   build-depends:       base >=4.6 && <4.7,
                        bytestring,
-                       cookie,
-                       data-default,
-                       http-client,
                        lens,
                        tagsoup,
-                       time,
                        wreq
   default-language:    Haskell2010
   ghc-options:         -Wall
