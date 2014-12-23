@@ -31,7 +31,7 @@ dumpOneMonth baseOpts month = do
   let opts =
         baseOpts & header "Cookie" .~ ["Setting-205-Calendar Year=" `mappend` month]
 
-  r <- getWith opts "http://madison.legistar.com/Calendar.aspx"
+  r <- getWith opts "https://madison.legistar.com/Calendar.aspx"
   let body = r ^. responseBody
       tags = parseTags body
   forM_ (sections isRowStart tags) $ \section -> do
