@@ -1,0 +1,9 @@
+
+# Cabal stuff
+/.cabal-sandbox/
+/cabal.sandbox.config
+/dist/
+
+# Emacs leftovers
+*~
+
