@@ -6,8 +6,10 @@ module Main
        where
 
 import           Control.Monad              (forM_)
+import           Data.Monoid                (mappend)
 
 import           Control.Lens
+import qualified Data.ByteString            as Strict
 import           Data.ByteString.Lazy       (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as B8
 import           Network.Wreq
@@ -15,10 +17,19 @@ import           Text.HTML.TagSoup
 import           Text.HTML.TagSoup.Tree     (flattenTree, tagTree)
 
 main :: IO ()
-main = do
+main =
+  withManager $ \baseOpts -> do
 
+  mapM_ (dumpOneMonth baseOpts)
+    [ "Last Month"
+    , "ThisMonth"
+    , "Next Month"
+    ]
+
+dumpOneMonth :: Options -> Strict.ByteString -> IO ()
+dumpOneMonth baseOpts month = do
   let opts =
-        defaults & header "Cookie" .~ ["Setting-205-Calendar Year=Last Month"]
+        baseOpts & header "Cookie" .~ ["Setting-205-Calendar Year=" `mappend` month]
 
   r <- getWith opts "http://madison.legistar.com/Calendar.aspx"
   let body = r ^. responseBody
